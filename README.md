@@ -27,39 +27,26 @@ The code is built with the following libraries:
 
 ## Data Preparation
 
-We use the dataset of NTU60 RGB+D as an example for description. We need to first dowload the [NTU-RGB+D](https://github.com/shahroudy/NTURGB-D) dataset.
-
-- Extract the dataset to ./data/ntu/nturgb+d_skeletons/
-- Process the data
-```bash
- cd ./data/ntu
- # Get skeleton of each performer
- python get_raw_skes_data.py
- # Remove the bad skeleton 
- python get_raw_denoised_data.py
- # Transform the skeleton to the center of the first frame
- python seq_transformation.py
-```
+We use the dataset of Calò as an example for description. 
 
 
 ## Training
 
 ```bash
-# For the CS setting
-python  main.py --network SGN --train 1 --case 0
-# For the CV setting
-python  main.py --network SGN --train 1 --case 1
+# For Calo's setting
+--network SGN --train 1 --case 1 --num-classes 11
 ```
 
-## Testing
 
-- Test the pre-trained models (./results/NTU/SGN/)
-```bash
-# For the CS setting
-python  main.py --network SGN --train 0 --case 0
-# For the CV setting
-python  main.py --network SGN --train 0 --case 1
-```
+Hyperparameters:
+
+- epoches: 120. (the same with paper's setting)
+- batch_size: 32. (original paper's setting for NTU is 64)
+- segment: 1. (But original paper is 20, their reason is: During training, we segment the entire skeleton sequence into 20 clips
+equally, and randomly select one frame from each clip to
+have a new sequence of 20 frames.)
+- 80% training set vs 20% test set. Don't have validation set.
+
 
 ## Reference
 
